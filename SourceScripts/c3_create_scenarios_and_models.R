@@ -644,8 +644,15 @@ if (exists('constraint.import.files')) {
       message(sprintf("... importing constraint from  %s", 
                       constraint.import.files[[i]][1]))
       #data.table(read.csv(file.path(inputfiles.dir, filename)))
-      import_constraint(fread(file.path(inputfiles.dir, 
-                                 constraint.import.files[[i]][1])))
+      cur.table = fread(file.path(inputfiles.dir, 
+                                  constraint.import.files[[i]][1]))
+      # read in args
+      cur.args <- constraint.import.files[[i]][[2]]
+      cur.args$constraint.table <- cur.table
+      
+      # add to properties sheet using input arguments and new table
+      do.call(import_constraint, cur.args)
+      
     } else {
       message(sprintf("... %s does not exist ... skipping", 
                       constraint.import.files[[i]][1]))

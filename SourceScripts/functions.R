@@ -469,6 +469,10 @@ import_constraint = function(constraint.table,obj.col = 'generator.name',constra
                              sense.col = 'sense', scenario.col='scenario') {
   if (constraint.type =='RHS Month') period_type_id = 3
   else if (constraint.type == 'RHS') period_type_id = 0
+  else if (constraint.type == 'RHS Hour') period_type_id = 6
+  else if (constraint.type == 'RHS Day') period_type_id = 1
+  else if (constraint.type == 'RHS Week') period_type_id = 2
+  else if (constraint.type == 'RHS Year') period_type_id = 4
   else error(paste0('import_constraint() not yet defined for ',constraint.type))
   
   new.object.table = data.table(expand.grid(name=unique(constraint.table[,get(constraint.col)]),class = c('Constraint','Data File')),description=NA,key='name')
